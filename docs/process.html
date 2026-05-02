@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Original Process | Property Assessment Fairness</title>
+    <style>
+      :root {
+        --ink: #17202a;
+        --muted: #5d6b75;
+        --line: #d7dde2;
+        --paper: #fbfaf7;
+        --panel: #ffffff;
+        --teal: #1b7f79;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.6;
+      }
+
+      header,
+      main,
+      footer {
+        width: min(920px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      header {
+        padding: 48px 0 28px;
+      }
+
+      main {
+        padding-bottom: 48px;
+      }
+
+      h1 {
+        margin: 0 0 14px;
+        font-size: clamp(2.1rem, 5vw, 4.2rem);
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      h2 {
+        margin: 0 0 14px;
+        font-size: 1.35rem;
+      }
+
+      p {
+        margin-top: 0;
+      }
+
+      .lede {
+        max-width: 760px;
+        color: var(--muted);
+        font-size: 1.08rem;
+      }
+
+      section {
+        margin-top: 18px;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      ul {
+        padding-left: 22px;
+      }
+
+      code,
+      pre {
+        background: #eef2f3;
+        border-radius: 6px;
+      }
+
+      code {
+        padding: 2px 5px;
+      }
+
+      pre {
+        overflow-x: auto;
+        padding: 16px;
+      }
+
+      a {
+        color: var(--teal);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      footer {
+        padding: 24px 0 40px;
+        color: var(--muted);
+        border-top: 1px solid var(--line);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><a href="index.html">Back to demo</a></p>
+      <h1>Original Coding Process and Analysis</h1>
+      <p class="lede">
+        A recruiter-friendly version of the original notebook workflow: EDA,
+        feature engineering, validation, fairness diagnostics, and metric reflection.
+      </p>
+    </header>
+
+    <main>
+      <section>
+        <h2>1. Framing the Problem</h2>
+        <p>
+          The project starts from a public-impact question: how can a county assess
+          residential property values accurately without creating an unfair tax burden?
+          Each row represents a Cook County residential property record with sale,
+          structural, location, and prior assessment information.
+        </p>
+        <p>
+          My framing focused on market-based assessment, explainability, and the fact
+          that average accuracy can hide systematic harm.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Exploratory Data Analysis</h2>
+        <p>
+          I first checked data quality, skew, and feature relationships. Sale price had
+          implausible low values and a highly right-skewed distribution, so the training
+          workflow filtered records below $500 and modeled log sale price.
+        </p>
+        <pre><code>training_data = initial_data[initial_data["Sale Price"] &gt;= 500]
+training_data["Log Sale Price"] = np.log(training_data["Sale Price"])
+training_data["Log Building Square Feet"] = np.log(training_data["Building Square Feet"])</code></pre>
+      </section>
+
+      <section>
+        <h2>3. Feature Engineering</h2>
+        <p>
+          I explored property size, bathrooms, neighborhood codes, prior building and
+          land estimates, and categorical housing attributes. The final portfolio model
+          keeps a compact, explainable feature set:
+        </p>
+        <ul>
+          <li><code>Log Estimate (Building)</code></li>
+          <li><code>Bathrooms</code></li>
+          <li><code>Log Building Square Feet</code></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4. Modeling Approach</h2>
+        <p>
+          The original notebook used ordinary least squares linear regression on
+          <code>Log Sale Price</code>. The refactored repo keeps that modeling path in
+          <code>scripts/run_model.py</code>, with train/test-safe preprocessing so sale-price
+          filtering is only applied to training data.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Validation Results</h2>
+        <p>The original notebook run produced stable validation metrics:</p>
+        <pre><code>Train RMSE:     0.6002
+Holdout RMSE:   0.5937
+4-fold CV RMSE: 0.6002 +/- 0.0049</code></pre>
+        <p>
+          Because the target is log sale price, this error should be interpreted as a
+          multiplicative prediction error rather than a fixed-dollar error.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Fairness Analysis</h2>
+        <p>
+          I compared error behavior for lower-priced and higher-priced homes. The dollar
+          RMSE was larger for expensive homes, but the overestimation rate exposed the
+          fairness risk.
+        </p>
+        <pre><code>RMSE for lower-priced homes:  about $76,899
+RMSE for higher-priced homes: about $245,632
+
+Lower-priced homes overestimated: 57.78%
+Higher-priced homes overestimated: 27.69%</code></pre>
+        <p>
+          Since overestimated assessments can raise tax burden, the pattern suggests a
+          regressive assessment risk.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. Metric Reflection</h2>
+        <p>
+          RMSE is useful, but dollar RMSE is dominated by expensive homes. I explored
+          MAPE to evaluate proportional error and make lower-priced-home errors more
+          visible in the analysis.
+        </p>
+        <pre><code>def mape(theta, X, y):
+    y_pred = X @ theta
+    percentage_error = np.abs((y - y_pred) / y)
+    return np.mean(percentage_error)</code></pre>
+      </section>
+
+      <section>
+        <h2>8. Takeaway</h2>
+        <p>
+          The strongest lesson is that a model can be technically accurate and socially
+          incomplete. A fair assessment model should combine competitive RMSE with
+          residual parity, similar error dispersion across groups, and no consistent
+          over-assessment of lower-priced homes.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      Full source narrative is also available in <a href="process.md">process.md</a>.
+    </footer>
+  </body>
+</html>

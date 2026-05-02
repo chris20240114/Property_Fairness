@@ -130,6 +130,16 @@
         margin-bottom: 0;
       }
 
+      a {
+        color: var(--teal);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
       .chart {
         padding: 24px;
         border: 1px solid var(--line);
@@ -333,6 +343,14 @@
 
       <section class="grid" aria-label="Recruiter notes">
         <article class="panel">
+          <h2>Original Process</h2>
+          <p>
+            The notebook workflow is preserved as a narrative process note covering EDA,
+            feature engineering, validation, and fairness analysis.
+          </p>
+          <p><a href="process.html">Read the process notes</a></p>
+        </article>
+        <article class="panel">
           <h2>What I Would Improve Next</h2>
           <p>
             Add neighborhood encodings, spatial validation, model cards, and monitoring dashboards
@@ -346,14 +364,15 @@
             communication of statistical tradeoffs.
           </p>
         </article>
-        <article class="panel">
-          <h2>Run It</h2>
-          <p>
-            Use <code>python tests/smoke_test.py</code> for a local check, then
-            <code>python scripts/run_model.py --train data/cook_county_train.csv</code>
-            when the source data is available.
-          </p>
-        </article>
+      </section>
+
+      <section class="chart" aria-label="Run instructions">
+        <h2>Run It</h2>
+        <p>
+          Use <code>python tests/smoke_test.py</code> for a local check, then
+          <code>python scripts/run_model.py --train data/cook_county_train.csv</code>
+          when the source data is available.
+        </p>
       </section>
     </main>
 

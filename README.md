@@ -13,8 +13,10 @@ Property tax assessments affect real homeowners. A model can look accurate on av
 Open the static recruiter demo:
 
 - [docs/index.html](docs/index.html)
+- [docs/process.md](docs/process.md)
+- [docs/process.html](docs/process.html)
 
-The page summarizes the problem, modeling approach, validation results, and fairness findings without requiring access to the original course data.
+The demo page summarizes the problem, modeling approach, validation results, and fairness findings without requiring access to the original course data. The process notes preserve the original coding and analysis path from the notebooks.
 
 ## Key Results
 
@@ -35,23 +37,33 @@ The page summarizes the problem, modeling approach, validation results, and fair
 
 ```text
 .
-├── docs/
-│   └── index.html                 # recruiter-facing static demo
-├── scripts/
-│   └── run_model.py               # reproducible model training CLI
-├── src/
-│   └── property_assessment_fairness/
-│       ├── features.py            # feature engineering pipeline
-│       └── metrics.py             # model and fairness diagnostics
-├── tests/
-│   └── smoke_test.py              # lightweight local verification
-├── projA1.ipynb                   # original EDA notebook
-├── projA2.ipynb                   # original modeling/fairness notebook
-├── projA1.pdf                     # original exported report
-├── projA2.pdf                     # original exported report
-├── requirements.txt
-└── README.md
+|-- docs/
+|   |-- index.html                 # recruiter-facing static demo
+|   |-- process.md                 # original coding process and analysis
+|   `-- process.html               # rendered process page for GitHub Pages
+|-- scripts/
+|   `-- run_model.py               # reproducible model training CLI
+|-- src/
+|   `-- property_assessment_fairness/
+|       |-- features.py            # feature engineering pipeline
+|       `-- metrics.py             # model and fairness diagnostics
+|-- tests/
+|   `-- smoke_test.py              # lightweight local verification
+|-- projA1.ipynb                   # original EDA notebook
+|-- projA2.ipynb                   # original modeling/fairness notebook
+|-- projA1.pdf                     # original exported report
+|-- projA2.pdf                     # original exported report
+|-- requirements.txt
+`-- README.md
 ```
+
+## Original Analysis
+
+The original work is preserved in the two notebooks and PDF exports:
+
+- `projA1.ipynb`: exploratory data analysis, data cleaning, transformations, and early fairness-aware metric design.
+- `projA2.ipynb`: model fitting, cross-validation, final feature pipeline, RMSE analysis, overestimation diagnostics, and MAPE reflection.
+- `docs/process.md`: concise narrative version of the original coding process and findings.
 
 ## Run Locally
 
