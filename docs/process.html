@@ -12,10 +12,17 @@
         --paper: #fbfaf7;
         --panel: #ffffff;
         --teal: #1b7f79;
+        --gold: #d79b34;
+        --rose: #c65454;
+        --blue: #356da8;
       }
 
       * {
         box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
       }
 
       body {
@@ -26,53 +33,186 @@
         line-height: 1.6;
       }
 
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid var(--line);
+        background: rgba(251, 250, 247, 0.96);
+        backdrop-filter: blur(10px);
+      }
+
+      .topbar-inner,
       header,
       main,
       footer {
-        width: min(920px, calc(100% - 40px));
+        width: min(1120px, calc(100% - 40px));
         margin: 0 auto;
       }
 
+      .topbar-inner {
+        min-height: 58px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      a {
+        color: var(--teal);
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        color: var(--ink);
+        font-size: 0.94rem;
+      }
+
+      .button.primary {
+        border-color: var(--teal);
+        background: var(--teal);
+        color: #ffffff;
+      }
+
       header {
-        padding: 48px 0 28px;
+        padding: 52px 0 22px;
       }
 
       main {
         padding-bottom: 48px;
       }
 
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
       h1 {
-        margin: 0 0 14px;
-        font-size: clamp(2.1rem, 5vw, 4.2rem);
+        max-width: 820px;
+        margin-bottom: 14px;
+        font-size: clamp(2.25rem, 5vw, 4.6rem);
         line-height: 1;
         letter-spacing: 0;
       }
 
       h2 {
-        margin: 0 0 14px;
-        font-size: 1.35rem;
+        margin-bottom: 14px;
+        font-size: 1.45rem;
       }
 
-      p {
-        margin-top: 0;
+      h3 {
+        margin-bottom: 8px;
+        font-size: 1.05rem;
       }
 
       .lede {
-        max-width: 760px;
+        max-width: 820px;
         color: var(--muted);
         font-size: 1.08rem;
       }
 
+      .meta-grid,
+      .two-col,
+      .three-col,
+      .figure-grid {
+        display: grid;
+        gap: 16px;
+      }
+
+      .meta-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-top: 24px;
+      }
+
+      .two-col {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .three-col {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .figure-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       section {
-        margin-top: 18px;
-        padding: 24px;
+        margin-top: 24px;
+        padding: 26px;
         border: 1px solid var(--line);
         border-radius: 8px;
         background: var(--panel);
       }
 
-      ul {
-        padding-left: 22px;
+      .stat {
+        min-height: 112px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1.55rem;
+      }
+
+      .stat span,
+      .caption,
+      .note {
+        color: var(--muted);
+      }
+
+      .callout {
+        border-left: 5px solid var(--teal);
+        background: #f3f8f7;
+      }
+
+      .warning {
+        margin-top: 18px;
+        padding: 18px;
+        border-left: 5px solid var(--rose);
+        background: #fff7f7;
+      }
+
+      .figure {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+      }
+
+      .figure img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .figure figcaption {
+        padding: 14px 16px 16px;
+        color: var(--muted);
+        font-size: 0.95rem;
       }
 
       code,
@@ -88,16 +228,39 @@
       pre {
         overflow-x: auto;
         padding: 16px;
+        line-height: 1.45;
       }
 
-      a {
-        color: var(--teal);
-        font-weight: 700;
-        text-decoration: none;
+      ul {
+        padding-left: 22px;
       }
 
-      a:hover {
-        text-decoration: underline;
+      li + li {
+        margin-top: 6px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: #eef5f4;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
       }
 
       footer {
@@ -105,125 +268,398 @@
         color: var(--muted);
         border-top: 1px solid var(--line);
       }
+
+      @media (max-width: 900px) {
+        .topbar-inner {
+          align-items: flex-start;
+          flex-direction: column;
+          padding: 10px 0;
+        }
+
+        .meta-grid,
+        .two-col,
+        .three-col,
+        .figure-grid {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
   </head>
   <body>
+    <div class="topbar">
+      <div class="topbar-inner">
+        <a href="index.html">Property Assessment Fairness</a>
+        <nav aria-label="Process navigation">
+          <a class="button primary" href="index.html">Results</a>
+          <a class="button" href="#eda">EDA</a>
+          <a class="button" href="#features">Features</a>
+          <a class="button" href="#modeling">Modeling</a>
+          <a class="button" href="#visuals">Visuals</a>
+          <a class="button" href="#fairness">Fairness</a>
+        </nav>
+      </div>
+    </div>
+
     <header>
-      <p><a href="index.html">Back to demo</a></p>
       <h1>Original Coding Process and Analysis</h1>
       <p class="lede">
-        A recruiter-friendly version of the original notebook workflow: EDA,
-        feature engineering, validation, fairness diagnostics, and metric reflection.
+        This page expands the original notebook workflow: human context, exploratory data
+        analysis, cleaning decisions, feature engineering, model validation, visual diagnostics,
+        and fairness-focused metric reflection.
       </p>
+      <div class="meta-grid" aria-label="Notebook summary">
+        <div class="stat">
+          <strong>2</strong>
+          <span>original notebooks preserved</span>
+        </div>
+        <div class="stat">
+          <strong>228</strong>
+          <span>total notebook cells reviewed</span>
+        </div>
+        <div class="stat">
+          <strong>10</strong>
+          <span>embedded notebook visualizations extracted</span>
+        </div>
+        <div class="stat">
+          <strong>0.594</strong>
+          <span>holdout RMSE from the model notebook</span>
+        </div>
+      </div>
     </header>
 
     <main>
-      <section>
-        <h2>1. Framing the Problem</h2>
+      <section class="callout">
+        <h2>How to Read This</h2>
         <p>
-          The project starts from a public-impact question: how can a county assess
-          residential property values accurately without creating an unfair tax burden?
-          Each row represents a Cook County residential property record with sale,
-          structural, location, and prior assessment information.
-        </p>
-        <p>
-          My framing focused on market-based assessment, explainability, and the fact
-          that average accuracy can hide systematic harm.
+          The live results page gives the short recruiter version. This process page is the deeper
+          evidence: it shows how the project moved from messy assessment data to a model audit.
+          I kept the original notebooks in the repo, then translated the useful coding and analysis
+          decisions into a readable web narrative.
         </p>
       </section>
 
       <section>
+        <h2>1. Human Context and Fairness Framing</h2>
+        <p>
+          The project begins by asking who is affected by a property value prediction. Homeowners,
+          local governments, buyers, lenders, and assessors all have a stake, but the harm is not
+          symmetric. An overassessment can increase a homeowner's tax bill, while systematic
+          underassessment of expensive homes can shift the public tax burden elsewhere.
+        </p>
+        <p>
+          My original analysis identified the key fairness risk as regressivity: lower-priced homes
+          being overvalued while higher-priced homes are undervalued. That pattern matters because
+          it can increase effective tax rates for working-class and historically disadvantaged
+          neighborhoods even when the model's overall accuracy looks acceptable.
+        </p>
+        <div class="two-col">
+          <div>
+            <h3>Question I Used to Guide the Work</h3>
+            <p>
+              Can a property assessment model be evaluated not only by aggregate error, but by who
+              receives overestimates and underestimates?
+            </p>
+          </div>
+          <div>
+            <h3>Fairness Definition</h3>
+            <p>
+              A fair model should have residuals centered near zero across price tiers and communities,
+              with similar error dispersion and no consistent overassessment of lower-priced homes.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="eda">
         <h2>2. Exploratory Data Analysis</h2>
         <p>
-          I first checked data quality, skew, and feature relationships. Sale price had
-          implausible low values and a highly right-skewed distribution, so the training
-          workflow filtered records below $500 and modeled log sale price.
+          The first notebook focused on understanding the dataset before fitting a model. I inspected
+          sale price distributions, identified placeholder-like low values, and used transformations
+          to make highly skewed variables easier to model.
         </p>
+        <div class="three-col">
+          <div>
+            <h3>Granularity</h3>
+            <p>
+              Each row represents a property record with sale, structure, location, and assessment
+              fields. This made parcel-level prediction possible.
+            </p>
+          </div>
+          <div>
+            <h3>Data Quality</h3>
+            <p>
+              Very small sale prices, including values below $500, looked unlike ordinary market
+              transactions and were excluded from the training target.
+            </p>
+          </div>
+          <div>
+            <h3>Skew</h3>
+            <p>
+              Sale price and assessment estimate variables were right-skewed, so log transforms
+              were central to the modeling process.
+            </p>
+          </div>
+        </div>
         <pre><code>training_data = initial_data[initial_data["Sale Price"] &gt;= 500]
 training_data["Log Sale Price"] = np.log(training_data["Sale Price"])
 training_data["Log Building Square Feet"] = np.log(training_data["Building Square Feet"])</code></pre>
       </section>
 
-      <section>
-        <h2>3. Feature Engineering</h2>
+      <section id="visuals">
+        <h2>3. Original Notebook Visualizations</h2>
         <p>
-          I explored property size, bathrooms, neighborhood codes, prior building and
-          land estimates, and categorical housing attributes. The final portfolio model
-          keeps a compact, explainable feature set:
+          These figures are extracted directly from the original notebook outputs. They show the
+          major visual checkpoints in the analysis: distribution shape, outlier handling, feature
+          relationships, model residuals, and fairness diagnostics.
         </p>
-        <ul>
-          <li><code>Log Estimate (Building)</code></li>
-          <li><code>Bathrooms</code></li>
-          <li><code>Log Building Square Feet</code></li>
-        </ul>
+        <div class="figure-grid">
+          <figure class="figure">
+            <img src="assets/notebook-figures/projA1-cell029-1.png" alt="Raw sale price distribution with heavy right skew">
+            <figcaption>
+              Raw sale price is highly right-skewed. This motivated both outlier review and modeling
+              sale price on the log scale.
+            </figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/notebook-figures/projA1-cell031-1.png" alt="Sale price distribution below one million dollars">
+            <figcaption>
+              Zooming into sales under $1,000,000 exposed the spike near very low sale prices,
+              which looked like non-market or placeholder values.
+            </figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/notebook-figures/projA1-cell045-1.png" alt="Log sale price distribution">
+            <figcaption>
+              After filtering tiny sale prices and applying a log transform, the target distribution
+              became more suitable for linear modeling.
+            </figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/notebook-figures/projA1-cell055-1.png" alt="Estimate land distribution before outlier removal">
+            <figcaption>
+              Land estimate values also showed strong skew, which made outlier handling and robust
+              interpretation important.
+            </figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/notebook-figures/projA1-cell062-1.png" alt="Estimate land distribution after IQR outlier filtering">
+            <figcaption>
+              Applying an IQR-based filter made the land estimate distribution more legible for EDA.
+            </figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/notebook-figures/projA1-cell072-1.png" alt="Bathrooms versus log sale price boxplot">
+            <figcaption>
+              Bathroom count showed a positive relationship with log sale price and became one of
+              the interpretable features in the final model.
+            </figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/notebook-figures/projA1-cell083-1.png" alt="Neighborhood code distribution and sale price">
+            <figcaption>
+              Neighborhood codes showed location signal, but also uneven sample sizes across groups.
+              This is useful but needs careful validation to avoid overfitting location artifacts.
+            </figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/notebook-figures/projA2-cell053-1.png" alt="Residuals versus log sale price">
+            <figcaption>
+              Residuals versus log sale price showed structure rather than pure noise, which raised
+              the question of regressive or progressive assessment patterns.
+            </figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/notebook-figures/projA2-cell099-1.png" alt="RMSE and overestimation percentage by log sale price interval">
+            <figcaption>
+              The overestimation chart was more directly useful for fairness than dollar RMSE:
+              lower-priced bins were overestimated more often.
+            </figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/notebook-figures/projA2-cell111-1.png" alt="MAPE across log sale price intervals">
+            <figcaption>
+              MAPE emphasized proportional error, surfacing relative harm that dollar-denominated
+              RMSE can hide.
+            </figcaption>
+          </figure>
+        </div>
       </section>
 
-      <section>
-        <h2>4. Modeling Approach</h2>
+      <section id="features">
+        <h2>4. Feature Engineering Decisions</h2>
         <p>
-          The original notebook used ordinary least squares linear regression on
-          <code>Log Sale Price</code>. The refactored repo keeps that modeling path in
-          <code>scripts/run_model.py</code>, with train/test-safe preprocessing so sale-price
-          filtering is only applied to training data.
+          The notebooks explored multiple feature families, then narrowed the portfolio model to a
+          small, explainable feature set. This keeps the public demo readable while preserving the
+          original reasoning in the notebooks.
         </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Feature Area</th>
+              <th>Original Analysis</th>
+              <th>Reasoning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Log sale price</td>
+              <td>Converted `Sale Price` into `Log Sale Price` after filtering very low values.</td>
+              <td>Reduced right skew and made the linear regression target more stable.</td>
+            </tr>
+            <tr>
+              <td>Building size</td>
+              <td>Used `Log Building Square Feet` as a size feature.</td>
+              <td>Size has a clear positive relationship with price, and log scale improves linearity.</td>
+            </tr>
+            <tr>
+              <td>Bathrooms</td>
+              <td>Extracted bathroom counts from structured fields or the `Description` text.</td>
+              <td>Bathroom count is interpretable and captures a meaningful home quality signal.</td>
+            </tr>
+            <tr>
+              <td>Assessment estimates</td>
+              <td>Used `Log Estimate (Building)` in the final model.</td>
+              <td>Prior building estimate carries strong valuation signal while remaining available at prediction time.</td>
+            </tr>
+            <tr>
+              <td>Neighborhood</td>
+              <td>Explored top neighborhoods and expensive-neighborhood indicators.</td>
+              <td>Location matters, but uneven group sizes create overfitting and fairness risks.</td>
+            </tr>
+            <tr>
+              <td>Categorical attributes</td>
+              <td>Explored substitution and one-hot encoding for fields like wall material.</td>
+              <td>Categorical property details can help, but the final demo kept the model compact.</td>
+            </tr>
+          </tbody>
+        </table>
+        <pre><code>DEFAULT_FEATURES = [
+    "Log Estimate (Building)",
+    "Bathrooms",
+    "Log Building Square Feet",
+]</code></pre>
       </section>
 
-      <section>
-        <h2>5. Validation Results</h2>
-        <p>The original notebook run produced stable validation metrics:</p>
-        <pre><code>Train RMSE:     0.6002
+      <section id="modeling">
+        <h2>5. Modeling and Validation</h2>
+        <p>
+          The second notebook fits ordinary least squares linear regression using
+          `sklearn.linear_model.LinearRegression(fit_intercept=True)`. The refactored repo keeps
+          that model path in `scripts/run_model.py` and adds a NumPy least-squares fallback so the
+          demo still runs when scikit-learn is not installed.
+        </p>
+        <div class="two-col">
+          <div>
+            <h3>Pipeline Rules</h3>
+            <ul>
+              <li>Never mutate the input dataframe in place.</li>
+              <li>Create target variables only when training.</li>
+              <li>Apply outlier filtering only to training data.</li>
+              <li>Never drop test parcels simply because they are unusual.</li>
+              <li>Fill missing feature values with medians.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Notebook Validation Results</h3>
+            <pre><code>Train RMSE:     0.6002
 Holdout RMSE:   0.5937
 4-fold CV RMSE: 0.6002 +/- 0.0049</code></pre>
+          </div>
+        </div>
         <p>
-          Because the target is log sale price, this error should be interpreted as a
-          multiplicative prediction error rather than a fixed-dollar error.
+          The train, holdout, and cross-validation scores are close, which suggests the simple model
+          is not merely memorizing the training set. Because the target is log sale price, the RMSE
+          should be interpreted as a multiplicative error rather than a fixed-dollar miss.
         </p>
       </section>
 
-      <section>
-        <h2>6. Fairness Analysis</h2>
+      <section id="fairness">
+        <h2>6. Fairness Findings</h2>
         <p>
-          I compared error behavior for lower-priced and higher-priced homes. The dollar
-          RMSE was larger for expensive homes, but the overestimation rate exposed the
-          fairness risk.
+          After fitting the model, I evaluated whether the residuals implied regressive taxation.
+          The key move was to compare overestimation rates by price tier rather than relying only on
+          aggregate RMSE.
         </p>
-        <pre><code>RMSE for lower-priced homes:  about $76,899
-RMSE for higher-priced homes: about $245,632
-
-Lower-priced homes overestimated: 57.78%
-Higher-priced homes overestimated: 27.69%</code></pre>
-        <p>
-          Since overestimated assessments can raise tax burden, the pattern suggests a
-          regressive assessment risk.
-        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Group</th>
+              <th>RMSE on Sale Price</th>
+              <th>Overestimated</th>
+              <th>Interpretation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Lower-priced homes</td>
+              <td>About $76,899</td>
+              <td>57.78%</td>
+              <td>More often predicted above actual value, increasing assessment burden risk.</td>
+            </tr>
+            <tr>
+              <td>Higher-priced homes</td>
+              <td>About $245,632</td>
+              <td>27.69%</td>
+              <td>Less often overestimated, meaning expensive homes were more likely to be underpredicted.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="warning">
+          <h3>Why This Matters</h3>
+          <p>
+            Dollar RMSE is larger for expensive homes because the houses are more expensive. But
+            overestimation rate connects more directly to tax fairness. The model pattern aligns
+            with a regressive assessment concern: cheaper homes are more likely to be overvalued,
+            while expensive homes are more likely to be undervalued.
+          </p>
+        </div>
       </section>
 
       <section>
         <h2>7. Metric Reflection</h2>
         <p>
-          RMSE is useful, but dollar RMSE is dominated by expensive homes. I explored
-          MAPE to evaluate proportional error and make lower-priced-home errors more
-          visible in the analysis.
+          RMSE is useful for prediction quality, but it can hide who is harmed proportionally. In
+          the notebook, I explored MAPE to evaluate relative error rather than raw dollar error.
         </p>
         <pre><code>def mape(theta, X, y):
     y_pred = X @ theta
     percentage_error = np.abs((y - y_pred) / y)
     return np.mean(percentage_error)</code></pre>
+        <p>
+          My conclusion was that no single metric is enough. A responsible assessment workflow
+          should report aggregate accuracy, proportional error, residual parity, and over/under
+          assessment rates across meaningful groups.
+        </p>
       </section>
 
       <section>
-        <h2>8. Takeaway</h2>
+        <h2>8. What the Refactor Added</h2>
         <p>
-          The strongest lesson is that a model can be technically accurate and socially
-          incomplete. A fair assessment model should combine competitive RMSE with
-          residual parity, similar error dispersion across groups, and no consistent
-          over-assessment of lower-priced homes.
+          The original project lived primarily as course notebooks. The portfolio refactor adds a
+          cleaner engineering surface around that work:
+        </p>
+        <ul>
+          <li>Reusable Python modules for feature engineering and fairness diagnostics.</li>
+          <li>A command-line script for training, validation, and optional prediction export.</li>
+          <li>A smoke test that can run without access to the original course data.</li>
+          <li>This live narrative page with extracted notebook visualizations.</li>
+          <li>A concise results page suitable for resume and LinkedIn links.</li>
+        </ul>
+      </section>
+
+      <section class="callout">
+        <h2>Bottom Line</h2>
+        <p>
+          The project is not just “I trained a house price model.” The stronger story is:
+          I built a valuation model, checked that it generalized, then audited whether its errors
+          could create unfair tax outcomes. That is the version worth showing recruiters.
         </p>
       </section>
     </main>
 
     <footer>
-      Full source narrative is also available in <a href="process.md">process.md</a>.
+      Full notebook artifacts remain in the repository as `projA1.ipynb`, `projA2.ipynb`,
+      `projA1.pdf`, and `projA2.pdf`.
     </footer>
   </body>
 </html>

@@ -80,9 +80,43 @@
 
       .lede {
         max-width: 680px;
-        margin-bottom: 0;
+        margin-bottom: 20px;
         color: var(--muted);
         font-size: 1.08rem;
+      }
+
+      .top-nav {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto 34px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 10px 15px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.88);
+        color: var(--ink);
+        font-weight: 800;
+      }
+
+      .button.primary {
+        border-color: var(--teal);
+        background: var(--teal);
+        color: #ffffff;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
       }
 
       .metric-strip {
@@ -251,6 +285,11 @@
   </head>
   <body>
     <header>
+      <nav class="top-nav" aria-label="Site navigation">
+        <a class="button primary" href="process.html">View Process</a>
+        <a class="button" href="process.html#visuals">Notebook Visuals</a>
+        <a class="button" href="https://github.com/chris20240114/Property_Fairness">GitHub Repo</a>
+      </nav>
       <div class="hero">
         <div>
           <h1>Property Assessment Fairness</h1>
@@ -258,6 +297,10 @@
             A Cook County housing model that treats prediction as a public-impact problem:
             accurate estimates matter, but so does who receives the largest errors.
           </p>
+          <div class="hero-actions" aria-label="Primary links">
+            <a class="button primary" href="process.html">Read the coding process</a>
+            <a class="button" href="process.html#visuals">See original visualizations</a>
+          </div>
         </div>
         <div class="metric-strip" aria-label="Project metrics">
           <div class="metric">
