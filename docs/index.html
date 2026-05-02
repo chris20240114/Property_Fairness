@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Property Assessment Fairness</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #17202a;
+        --muted: #5d6b75;
+        --line: #d7dde2;
+        --paper: #fbfaf7;
+        --panel: #ffffff;
+        --teal: #1b7f79;
+        --gold: #d79b34;
+        --rose: #c65454;
+        --blue: #356da8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.5;
+      }
+
+      header {
+        padding: 56px 24px 36px;
+        border-bottom: 1px solid var(--line);
+        background:
+          linear-gradient(90deg, rgba(27, 127, 121, 0.11), rgba(215, 155, 52, 0.10)),
+          var(--panel);
+      }
+
+      main {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 36px 0 56px;
+      }
+
+      .hero {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+        gap: 32px;
+        align-items: end;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin-bottom: 16px;
+        font-size: clamp(2.25rem, 5vw, 4.8rem);
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      h2 {
+        margin-bottom: 18px;
+        font-size: 1.45rem;
+      }
+
+      h3 {
+        margin-bottom: 8px;
+        font-size: 1rem;
+      }
+
+      .lede {
+        max-width: 680px;
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 1.08rem;
+      }
+
+      .metric-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .metric {
+        min-height: 108px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.78);
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 1.7rem;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      section {
+        margin-top: 38px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .panel {
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .panel p:last-child {
+        margin-bottom: 0;
+      }
+
+      .chart {
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .bar-row {
+        display: grid;
+        grid-template-columns: 170px minmax(0, 1fr) 70px;
+        gap: 14px;
+        align-items: center;
+        margin: 16px 0;
+      }
+
+      .track {
+        height: 18px;
+        border-radius: 999px;
+        background: #edf0f2;
+        overflow: hidden;
+      }
+
+      .bar {
+        height: 100%;
+        border-radius: inherit;
+      }
+
+      .bar.rose {
+        width: 57.78%;
+        background: var(--rose);
+      }
+
+      .bar.blue {
+        width: 27.69%;
+        background: var(--blue);
+      }
+
+      .bar.gold {
+        width: 60%;
+        background: var(--gold);
+      }
+
+      .bar.teal {
+        width: 59.37%;
+        background: var(--teal);
+      }
+
+      .caption {
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 0.94rem;
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .step {
+        min-height: 136px;
+        padding: 18px;
+        border-top: 4px solid var(--teal);
+        background: var(--panel);
+        border-radius: 8px;
+        box-shadow: 0 1px 0 rgba(23, 32, 42, 0.08);
+      }
+
+      .step:nth-child(2) {
+        border-color: var(--gold);
+      }
+
+      .step:nth-child(3) {
+        border-color: var(--blue);
+      }
+
+      .step:nth-child(4) {
+        border-color: var(--rose);
+      }
+
+      code {
+        padding: 2px 5px;
+        border-radius: 4px;
+        background: #eef2f3;
+      }
+
+      footer {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 28px 0 44px;
+        color: var(--muted);
+        border-top: 1px solid var(--line);
+      }
+
+      @media (max-width: 860px) {
+        .hero,
+        .grid,
+        .flow,
+        .metric-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .bar-row {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="hero">
+        <div>
+          <h1>Property Assessment Fairness</h1>
+          <p class="lede">
+            A Cook County housing model that treats prediction as a public-impact problem:
+            accurate estimates matter, but so does who receives the largest errors.
+          </p>
+        </div>
+        <div class="metric-strip" aria-label="Project metrics">
+          <div class="metric">
+            <strong>0.594</strong>
+            <span>holdout RMSE on log sale price</span>
+          </div>
+          <div class="metric">
+            <strong>0.600</strong>
+            <span>4-fold cross-validation RMSE</span>
+          </div>
+          <div class="metric">
+            <strong>57.8%</strong>
+            <span>lower-priced homes overestimated</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="grid" aria-label="Project summary">
+        <article class="panel">
+          <h2>Problem</h2>
+          <p>
+            Property assessments influence tax bills. A model that misses unevenly can shift
+            tax burden toward lower-priced homes even when its average error looks acceptable.
+          </p>
+        </article>
+        <article class="panel">
+          <h2>Approach</h2>
+          <p>
+            I modeled log sale price with linear regression, engineered stable property features,
+            and evaluated both accuracy and distributional error patterns.
+          </p>
+        </article>
+        <article class="panel">
+          <h2>Outcome</h2>
+          <p>
+            The model validated consistently, but diagnostics revealed a regressive pattern:
+            cheaper homes were more likely to be overvalued than expensive homes.
+          </p>
+        </article>
+      </section>
+
+      <section class="chart" aria-label="Fairness diagnostic chart">
+        <h2>Fairness Diagnostic</h2>
+        <div class="bar-row">
+          <strong>Lower-price tier</strong>
+          <div class="track"><div class="bar rose"></div></div>
+          <span>57.78%</span>
+        </div>
+        <div class="bar-row">
+          <strong>Higher-price tier</strong>
+          <div class="track"><div class="bar blue"></div></div>
+          <span>27.69%</span>
+        </div>
+        <p class="caption">
+          Share of homes overestimated by the model in the original notebook run. For assessment,
+          higher overestimation means a higher likely tax burden relative to actual sale value.
+        </p>
+      </section>
+
+      <section>
+        <h2>Modeling Workflow</h2>
+        <div class="flow">
+          <div class="step">
+            <h3>1. Clean</h3>
+            <p>Remove invalid sale prices and handle missing values without dropping test parcels.</p>
+          </div>
+          <div class="step">
+            <h3>2. Engineer</h3>
+            <p>Use log building value, log building square feet, and bathroom count features.</p>
+          </div>
+          <div class="step">
+            <h3>3. Validate</h3>
+            <p>Check train, holdout, and cross-validation RMSE on log sale price.</p>
+          </div>
+          <div class="step">
+            <h3>4. Audit</h3>
+            <p>Compare residual behavior across price tiers using RMSE, MAPE, and overestimation rate.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid" aria-label="Recruiter notes">
+        <article class="panel">
+          <h2>What I Would Improve Next</h2>
+          <p>
+            Add neighborhood encodings, spatial validation, model cards, and monitoring dashboards
+            for price-tier and community-level residual parity.
+          </p>
+        </article>
+        <article class="panel">
+          <h2>Skills Shown</h2>
+          <p>
+            Python, pandas, scikit-learn, feature engineering, model validation, fairness analysis,
+            communication of statistical tradeoffs.
+          </p>
+        </article>
+        <article class="panel">
+          <h2>Run It</h2>
+          <p>
+            Use <code>python tests/smoke_test.py</code> for a local check, then
+            <code>python scripts/run_model.py --train data/cook_county_train.csv</code>
+            when the source data is available.
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      Portfolio refactor of an academic project on Cook County residential property assessment fairness.
+    </footer>
+  </body>
+</html>
